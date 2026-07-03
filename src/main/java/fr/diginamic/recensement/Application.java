@@ -50,7 +50,7 @@ public class Application {
 				// Conversion du choix utilisateur en int
 				choix = Integer.parseInt(choixMenu);
 			} catch (InputMismatchException e) {
-				System.out.println("Le choix doit être un entier.");
+				System.err.println("Le choix doit être un entier.");
 				continue;
 			}
 
@@ -112,7 +112,7 @@ public class Application {
 		try {
 			service.traiter(recensement, scanner);
 		} catch (RecensementException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 }
