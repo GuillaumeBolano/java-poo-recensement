@@ -44,9 +44,10 @@ public class RechercheVillesPlusPeupleesRegion extends MenuService {
 
 		List<Ville> villesRegions = new ArrayList<Ville>();
 
-		RegionVerification.estReelle(nomRegion, villesRegions);
-
 		List<Ville> villes = recensement.getVilles();
+
+		RegionVerification.estReel(nomRegion, villes);
+
 		for (Ville ville : villes) {
 			if (ville.getNomRegion().toLowerCase().startsWith(nomRegion.toLowerCase())) {
 				villesRegions.add(ville);

@@ -19,7 +19,7 @@ public class RecherchePopulationRegionService extends MenuService {
 	@Override
 	public void traiter(Recensement rec, Scanner scanner) throws RecensementException {
 
-		System.out.println("Quel est le nom (ou le début de nom) de la région recherchée ? ");
+		System.out.println("Quel est le nom (ou le code) de la région recherchée ? ");
 		String choix = scanner.nextLine();
 
 		List<Ville> villes = rec.getVilles();
