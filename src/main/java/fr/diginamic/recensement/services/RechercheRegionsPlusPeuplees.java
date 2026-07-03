@@ -10,7 +10,11 @@ import java.util.Scanner;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Region;
 import fr.diginamic.recensement.entites.Ville;
+import fr.diginamic.recensement.exceptions.RecensementException;
+import fr.diginamic.recensement.exceptions.RegionException;
+import fr.diginamic.recensement.exceptions.ValidationException;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Affichage des 10 régions les plus peuplées
@@ -21,11 +25,20 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheRegionsPlusPeuplees extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter(Recensement recensement, Scanner scanner) throws RecensementException {
 
 		System.out.println("Veuillez saisir un nombre de régions:");
 		String nbRegionsStr = scanner.nextLine();
+
+		if (!NumberUtils.isDigits(nbRegionsStr)) {
+			throw new ValidationException("Le nombre de régions doit être un entier.");
+		}
+
 		int nbRegions = Integer.parseInt(nbRegionsStr);
+
+		if (nbRegions <= 0) {
+			throw new ValidationException("Le nombre de régions doit être supérieur à 0.");
+		}
 
 		// On récupére la liste des villes du recensement
 		List<Ville> villes = recensement.getVilles();
@@ -59,6 +72,10 @@ public class RechercheRegionsPlusPeuplees extends MenuService {
 		// On créé un comparateur de Region pour trier la liste des régions dans l'ordre
 		// de populations décroissantes.
 		Collections.sort(regions, new EnsemblePopComparateur(false));
+
+		if (nbRegions > regions.size()) {
+			throw new RegionException("Il n'existe que " + regions.size() + " régions." );
+		}
 
 		// On affiche les 10 premiére régions de la liste triée.
 		for (int i = 0; i < nbRegions; i++) {
